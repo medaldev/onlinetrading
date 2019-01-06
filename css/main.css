@@ -1,0 +1,134 @@
+body {
+	background: #F3F3F3;
+	color: #1C2226;
+}
+
+a {
+	text-decoration: none;
+}
+
+.logo {
+	font-family: "PSG Font";
+
+}
+
+.navbar {
+    min-height: 70px;
+	height: auto;
+}
+
+.menu ul {
+	list-style: none;
+	width: auto;
+}
+
+.menu ul li {
+	float: left;
+	width: auto;
+	margin-top: 1rem;
+}
+
+.menu ul:after {
+	clear: both;
+}
+
+.menu ul li a {
+    padding: 1rem 1rem;
+}
+
+.bg-dark {
+	background: #030C17;
+}
+
+.navbar-dark .menu ul li a {
+	color: #f1f1f1;
+}
+
+.navbar-dark {
+	background: #030C17;
+}
+
+.navbar-dark .menu ul li a.active {
+	color: #fff;
+}
+
+.clear {
+	clear: both;
+}
+
+
+.sub-header {
+	min-height: 110px;
+	background: #121C27;
+	border-top: 1px solid #707565;
+	border-bottom: 1px solid #707565;
+}
+
+.main_menu {
+	min-height: 50px;
+	height: auto;
+	border-bottom: 1px solid #bbb;
+}
+
+.bg-grey-dark {
+	background: #1C2226;
+}
+
+.text-dark {
+	color: #030C17 !important;
+}
+
+.text-grey {
+	color: #646769 !important;
+}
+
+.block {
+	background: #fff;
+}
+
+.section {
+	min-height: 400px;
+}
+
+
+.product {
+	min-height: 260px;
+}
+
+.text_intro {
+	font-size: 0.9rem;
+}
+
+.sections_img {
+	max-height: 200px;
+}
+
+.bb-light {
+	border-bottom: 1px solid #707565;
+}
+
+.menu-col ul {
+	list-style: none;
+}
+
+.product-properties {
+	max-width: 60%;
+}
+
+.product-properties tr {
+	min-height: 2rem;
+	height: 2rem;
+}
+
+.sign {
+	width: 20px;
+    height: 20px;
+}
+
+.search_img {
+    top: 3px;
+    position: relative;
+    left: -25px;
+    border-left: 1px solid #ccc;
+    padding-left: 1px;
+}
