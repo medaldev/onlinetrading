@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="/css/bootstrap-grid.css">
     <link rel="stylesheet" href="/css/static.css">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="icon" sizes="32x32" type="image/png" href="/favicon.png">
-    <title>Интернет-магазин</title>
+    <link rel="icon" sizes="32x32" type="image/png" href="http://onlinetrading/favicon.png">
+    <title><?=$title?></title>
 </head>
 <body>
 <header>

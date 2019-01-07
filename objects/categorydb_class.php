@@ -8,7 +8,6 @@ class CategoryDB extends ObjectDB {
 		parent::__construct(self::$table);
 		$this->add("id");
 		$this->add("title");
-		$this->add("text");
 	}
 
 
@@ -27,6 +26,10 @@ class CategoryDB extends ObjectDB {
 			$data[$i]->products = ProductDB::getProductsOnCategoryId($i);
 		}
 		return $data;
+	}
+
+	public static function getCategoriesOnSection($section_id) {
+		return self::getAllOnField(self::$table, __CLASS__, "section_id", $section_id);
 	}
 	
 	public static function getCategoryOnId($id) {

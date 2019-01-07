@@ -10,7 +10,9 @@ class ProductDB extends ObjectDB {
 		$this->add("title");
 		$this->add("img");
 		$this->add("category_id");
+		$this->add("section_id");
 		$this->add("text");
+		$this->add("seller_id");
 	}
 
 
@@ -27,9 +29,28 @@ class ProductDB extends ObjectDB {
 		}
 		return $data;
 	}
+
+	public function getBaseProperties() {
+		$properties = array();
+		$seller = new SellerDB();
+		$seller->loadOnProductId($this->seller_id);
+		$properties["seller"] = $seller->title;
+		return $properties;
+	}
+
+	public function getSellerProperties() {
+		$property_object = new PropertiesProductDB();
+		$property_object->getPropertiesOnProductId($this->id);
+		$property_object->ProperiesArray();
+		return $property_object->properties_list;
+	}
 	
 	public static function getProductsOnCategoryId($id) {
 		return ObjectDB::getAllOnField(self::$table, __CLASS__, "category_id", $id, "id");
+	}
+
+	public static function getProductsOnSectionId($id) {
+		return ObjectDB::getAllOnField(self::$table, __CLASS__, "section_id", $id, "id");
 	}
 
 	public static function getProductOnTitle($title) {

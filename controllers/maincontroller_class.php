@@ -30,18 +30,58 @@ class MainController extends AbstractController {
 		$content = $this->view->render("index", ["topics" => TopicDB::getAllTopics()], true);
 		$this->render($content);
 	}
-	
-	
 
-	
+	public function actionSection() {
+
+		$section = new SectionDB();
+		$section->loadOnId($this->request->id);
+
+		$this->title = $section->title;
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+
+		$render_data = array();
+		$render_data["section_title"] = $section->title;
+		$render_data["categories"] = CategoryDB::getCategoriesOnSection($this->request->id);
+		$render_data["products"] = ProductDB::getProductsOnSectionId($this->request->id);
+
+		$content = $this->view->render("section", $render_data, true);
+		$this->render($content);
+	}
+
+    public function actionProduct() {
+
+        $section = new SectionDB();
+        $category = new CategoryDB();
+        $product = new ProductDB();
+        $product->loadOnId($this->request->id);
+        $section->loadOnId($product->section_id);
+        $category->loadOnId($product->category_id);
+        $this->title = $product->title;
+        $this->meta_desc = "Описание главной страницы.";
+        $this->meta_key = "описание, описание главной страницы";
+
+        $render_data = array();
+        $render_data["category_title"] = $category->title;
+        $render_data["product_title"] = $product->title;
+        $render_data["categories"] = CategoryDB::getCategoriesOnSection($section->id);
+        $render_data["product_text"] = $product->text;
+        $render_data["shop_properties"] = $product->getBaseProperties();
+        $render_data["seller_properties"] = $product->getSellerProperties();
+
+        $content = $this->view->render("product", $render_data, true);
+        $this->render($content);
+    }
+
+
 	public function actionGetdataproduct() {
 		if (!$this->request->id) $this->redirect("/");
 		$product = new ProductDB();
 		$product->loadOnId($this->request->id);
 		$cat = new CategoryDB();
 		$cat->loadOnId($product->category_id);
-		echo json_encode(array("title" => $product->title, 
-								"text" => $product->text, 
+		echo json_encode(array("title" => $product->title,
+								"text" => $product->text,
 								"img" => $product->img,
 								"img_path" => Config::DIR_IMAGES.$product->img,
 								"category" => $cat->title,
@@ -59,7 +99,7 @@ class MainController extends AbstractController {
 		$data = $this->view->render("topmenu", ["items" => $items, "uri" => $this->uri], true);
 		return $data;
 	}
-	
+
 	protected function getReviews() {
 		$items = ReviewDB::getAllReviews();
 		$data = $this->view->render("reviews", ["items" => $items, "uri" => $this->uri], true);

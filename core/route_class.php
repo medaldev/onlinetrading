@@ -3,17 +3,16 @@
 class Route {
 
 	public static function start() {
-		
-		$controllers = ["Admin", "Main"];
-		$isset = false;
-		for ($i = 0; $i < count($controllers); $i++) {
-			$action_name = "index";
-			
-			$uri = URL::deleteGET(URL::current(), "id");
-			$uri = substr($uri, 1);
-			if ($uri) $action_name = $uri;
-			
-		
+
+        $controllers = ["Main"];
+        $isset = false;
+        for ($i = 0; $i < count($controllers); $i++) {
+            $action_name = "index";
+
+            $uri = URL::deleteGET(URL::current(), "id");
+            $uri = substr($uri, 1);
+            if ($uri) $action_name = $uri;
+
 			$controller_name = $controllers[$i];
 		
 			$controller_name = $controller_name."Controller";

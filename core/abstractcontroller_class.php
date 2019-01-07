@@ -17,12 +17,6 @@ abstract class AbstractController {
 	public function action404() {
 		header("HTTP/1.1 404 Not Found");
 		header("Status: 404 Not Found");
-		$this->title = "Страница не найдена!";
-		$this->meta_desc = "Страница не найдена.";
-		$this->meta_key = "404, страница не найдена";
-
-		$content = $this->view->render("404", [], true);
-		$this->render($content);
 	}
 	
 	final protected function redirect($url) {
