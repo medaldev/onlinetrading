@@ -3,37 +3,53 @@
 class SectionDB extends ObjectDB {
 
     protected static $table = "sections";
+    public $sef;
+    public $link;
+
 
     public function __construct() {
         parent::__construct(self::$table);
         $this->add("id");
         $this->add("title");
-        $this->add("sef");
         $this->add("topic_id");
         $this->add("text");
+        $this->link = "/section?id=".$this->id;
+        $this->sef = SefDB::getAliasOnLink($this->link);
     }
+
 
 
     public static function getAllSections() {
         $data = self::getAll(__CLASS__, self::$table);
+        $data = self::initDataItems($data);
         return $data;
     }
 
 
     public static function getSectionOnId($id) {
-        return ObjectDB::getAllOnField(self::$table, __CLASS__, "id", $id, "id");
+        $data = ObjectDB::getAllOnField(self::$table, __CLASS__, "id", $id, "id");
+        $data = self::initDataItems($data);
+        return $data;
     }
 
     public function loadOnId($id) {
-        return $this->loadOnField("id", $id);
+        $section = $this->loadOnField("id", $id);
+        return $section;
     }
 
-    public function loadOnTitle($title) {
-        return $this->loadOnField("title", $title);
-    }
 
     public static function getAllSectionsOnTopic($id) {
-        return ObjectDB::getAllOnField(self::$table, __CLASS__, "topic_id", $id, "id");
+        $data = ObjectDB::getAllOnField(self::$table, __CLASS__, "topic_id", $id, "id");
+        $data = self::initDataItems($data);
+        return $data;
+    }
+
+    public static function initDataItems($data) {
+        foreach ($data as $d) {
+            $d->link = "/section?id=".$d->id;
+            $d->sef = SefDB::getAliasOnLink($d->link);
+        }
+        return $data;
     }
 
     public static function postLoad() {

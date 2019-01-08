@@ -22,6 +22,11 @@ class URL {
 		return $address.$uri;
 	}
 
+	public static function redirect($url) {
+		header("Location: $url");
+		exit;
+	}
+
 	public static function current($address = "", $amp = false) {
 		$url = self::getAbsolute($address, $_SERVER["REQUEST_URI"]);
 		if ($amp) $url = str_replace("&", "&amp;", $url);

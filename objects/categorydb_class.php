@@ -9,6 +9,8 @@ class CategoryDB extends ObjectDB {
 		$this->add("id");
 		$this->add("section_id");
 		$this->add("title");
+		$this->link = "/category?id=".$this->id;
+		$this->sef = SefDB::getAliasOnLink($this->link);
 	}
 
 
@@ -30,23 +32,35 @@ class CategoryDB extends ObjectDB {
 	}
 
 	public static function getCategoriesOnSection($section_id) {
-		return self::getAllOnField(self::$table, __CLASS__, "section_id", $section_id);
+		$data = self::getAllOnField(self::$table, __CLASS__, "section_id", $section_id);
+		$data = self::initDataItems($data);
+		return $data;
 	}
 	
 	public static function getCategoryOnId($id) {
-		return ObjectDB::getAllOnField(self::$table, __CLASS__, "id", $id, "id");
+		$data = self::getAllOnField(self::$table, __CLASS__, "id", $id, "id");
+		$data = self::initDataItems($data);
+		return $data;
+
 	}
 	
 	public function loadOnId($id) {
-		return $this->loadOnField("id", $id);
+		$category = $this->loadOnField("id", $id);
+		return $category;
 	}
-	
-	public function loadOnTitle($title) {
-		return $this->loadOnField("title", $title);
+
+
+	public static function initDataItems($data) {
+		foreach ($data as $d) {
+			$d->link = "/category?id=".$d->id;
+			$d->sef = SefDB::getAliasOnLink($d->link);
+		}
+		return $data;
 	}
+
 	
 	public static function postLoad() {
-		return true;
+
 	}
 	
 	public static function postInsert() {

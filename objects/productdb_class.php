@@ -13,6 +13,8 @@ class ProductDB extends ObjectDB {
 		$this->add("section_id");
 		$this->add("text");
 		$this->add("seller_id");
+		$this->link = "/product?id=".$this->id;
+		$this->sef = SefDB::getAliasOnLink($this->link);
 	}
 
 
@@ -46,11 +48,15 @@ class ProductDB extends ObjectDB {
 	}
 	
 	public static function getProductsOnCategoryId($id) {
-		return ObjectDB::getAllOnField(self::$table, __CLASS__, "category_id", $id, "id");
+		$data = ObjectDB::getAllOnField(self::$table, __CLASS__, "category_id", $id, "id");
+		$data = self::initDataItems($data);
+		return $data;
 	}
 
 	public static function getProductsOnSectionId($id) {
-		return ObjectDB::getAllOnField(self::$table, __CLASS__, "section_id", $id, "id");
+		$data = ObjectDB::getAllOnField(self::$table, __CLASS__, "section_id", $id, "id");
+		$data = self::initDataItems($data);
+		return $data;
 	}
 
 	public static function getProductOnTitle($title) {
@@ -59,9 +65,18 @@ class ProductDB extends ObjectDB {
 		$product->img_path = Config::DIR_IMAGES.$product->img;
 		return $product;
 	}
+
+	public static function initDataItems($data) {
+		foreach ($data as $d) {
+			$d->link = "/product?id=".$d->id;
+			$d->sef = SefDB::getAliasOnLink($d->link);
+		}
+		return $data;
+	}
 	
 	public function loadOnId($id) {
-		return $this->loadOnField("id", $id);
+		$product = $this->loadOnField("id", $id);
+		return $product;
 	}
 	
 	public static function postLoad() {

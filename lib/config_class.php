@@ -2,7 +2,7 @@
 
 abstract class Config {
 	
-	const ADDRESS = "http://onlinetradeing";
+	const ADDRESS = "http://onlinetrading/";
 	const DB_HOST = "localhost";
 	const DB_USER = "root";
 	const DB_PASSWORD = "";
