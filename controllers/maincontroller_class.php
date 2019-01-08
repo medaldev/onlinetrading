@@ -49,6 +49,24 @@ class MainController extends AbstractController {
 		$this->render($content);
 	}
 
+    public function actionCategory() {
+
+        $category = new CategoryDB();
+        $category->loadOnId($this->request->id);
+
+        $this->title = $category->title;
+        $this->meta_desc = "Описание главной страницы.";
+        $this->meta_key = "описание, описание главной страницы";
+
+        $render_data = array();
+        $render_data["category_title"] = $category->title;
+        $render_data["categories"] = CategoryDB::getCategoriesOnSection($category->section_id);
+        $render_data["products"] = ProductDB::getProductsOnCategoryId($category->id);
+
+        $content = $this->view->render("category", $render_data, true);
+        $this->render($content);
+    }
+
     public function actionProduct() {
 
         $section = new SectionDB();
@@ -107,19 +125,20 @@ class MainController extends AbstractController {
 	}
 
 
-	protected function getFooterMenu() {
-		$items = MenuDB::getAllTopMenu();
-		$data = $this->view->render("footermenu", ["items" => $items, "uri" => $this->uri], true);
+	protected function getSystemMenu() {
+		$items = SystemMenuDB::getMenu();
+		$data = $this->view->render("system_menu", ["items" => $items, "uri" => $this->uri], true);
 		return $data;
 	}
 
 	protected function render($str) {
 		$params = array();
 		$params["title"] = $this->title;
-		$params["meta_desc"] = $this->meta_desc;
-		$params["meta_key"] = $this->meta_key;
-		$params["content"] = $str;
-		$this->view->render(Config::MAIN_LAYOUT, $params);
+        $params["meta_desc"] = $this->meta_desc;
+        $params["meta_key"] = $this->meta_key;
+        $params["system_menu"] = $this->getSystemMenu();
+        $params["content"] = $str;
+        $this->view->render(Config::MAIN_LAYOUT, $params);
 	}
 
 }

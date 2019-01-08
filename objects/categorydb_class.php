@@ -7,6 +7,7 @@ class CategoryDB extends ObjectDB {
 	public function __construct() {
 		parent::__construct(self::$table);
 		$this->add("id");
+		$this->add("section_id");
 		$this->add("title");
 	}
 

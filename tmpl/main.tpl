@@ -17,22 +17,7 @@
                 <p class="h3 text-white logo mt-3 ml-3">ПензаТоргСервис</p>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                <div class="menu menu-dark mt-1">
-                    <ul class="fl-r">
-                        <li>
-                            <a href="#" class="active">Главная</a>
-                        </li>
-                        <li>
-                            <a href="#">Оплата</a>
-                        </li>
-                        <li>
-                            <a href="#">Доставка</a>
-                        </li>
-                        <li>
-                            <a href="#">Сотрудничество</a>
-                        </li>
-                    </ul>
-                </div>
+                <?=$system_menu?>
             </div>
         </div>
     </div>

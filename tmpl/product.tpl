@@ -43,7 +43,7 @@
                     <div class="col-12 p-0 mt-4">
                         <p><?=$product_text?></p>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-12 mt-5">
                         <p class="bold text-center">Полные характеристики</p>
                         <table class="product-properties mt-4 center">
                             <?php foreach ($seller_properties as $property => $value) { ?>
