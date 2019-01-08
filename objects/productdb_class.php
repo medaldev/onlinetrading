@@ -13,8 +13,8 @@ class ProductDB extends ObjectDB {
 		$this->add("section_id");
 		$this->add("text");
 		$this->add("seller_id");
-		$this->link = "/product?id=".$this->id;
-		$this->sef = SefDB::getAliasOnLink($this->link);
+		$this->add("price");
+		$this->add("wholesale");
 	}
 
 
@@ -81,10 +81,59 @@ class ProductDB extends ObjectDB {
 
 		return $products;
 	}
-	
+
+	public static function addNewOrder($product) {
+		if (!session_id()) {
+			session_start();
+			$_SESSION["order"] = array();
+		}
+
+		if (count($_SESSION["order"]) != 0) {
+			if (in_array($product, $_SESSION["order"])) return false;
+			else self::addToCart($product);
+		}
+		else self::addToCart($product);
+	}
+
+	public static function getSumAllInCart() {
+		$result = 0;
+		foreach ($_SESSION["order"] as $product)  {
+			$result += $product->price;
+		}
+		return $result;
+	}
+
+	public static function addToCart($product) {
+		$_SESSION['ordered_ids'][] = $product->id;
+		$_SESSION["order"][] = $product;
+	}
+
+	public static function isExistsProductInCart($id) {
+		return in_array($id, $_SESSION["ordered_ids"]);
+	}
+
+	public static function deleteProductInCart($id) {
+		foreach ($_SESSION["order"] as $product) {
+			if ($product->id == $id) {
+				unset($_SESSION["order"][array_search($product, $_SESSION["order"])]);
+			}
+		}
+		unset($_SESSION["ordered_ids"][array_search($id, $_SESSION["ordered_ids"])]);
+
+	}
+
 	public function loadOnId($id) {
-		$product = $this->loadOnField("id", $id);
-		return $product;
+		$section = $this->loadOnField("id", $id);
+		return $section;
+	}
+
+	public function link() {
+		return "/product?id=".$this->id;
+
+	}
+
+	public function sef() {
+		return SefDB::getAliasOnLink($this->link());
 	}
 	
 	public static function postLoad() {

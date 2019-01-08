@@ -7,9 +7,13 @@ class MainController extends AbstractController {
 	protected $meta_key;
 
 	public function __construct() {
-		if (!session_id()) session_start();
-		parent::__construct(new View(Config::DIR_TMPL));
-	}
+		if (!session_id()) {
+		    session_start();
+            if (!$_SESSION['order']) $_SESSION['order'] = array();
+            if (!$_SESSION['ordered_ids']) $_SESSION['ordered_ids'] = array();
+        }
+        parent::__construct(new View(Config::DIR_TMPL));
+    }
 
 	public function action404() {
 		parent::action404();
@@ -32,8 +36,10 @@ class MainController extends AbstractController {
 	}
 
 	public function actionSection() {
+        //unset($_SESSION["order"]);
+        //unset($_SESSION["ordered_ids"]);
 
-		$section = new SectionDB();
+        $section = new SectionDB();
 		$section->loadOnId($this->request->id);
 
 		$this->title = $section->title;
@@ -43,7 +49,8 @@ class MainController extends AbstractController {
 		$render_data = array();
 		$render_data["section_title"] = $section->title;
 		$render_data["categories"] = CategoryDB::getCategoriesOnSection($this->request->id);
-		$render_data["products"] = ProductDB::getProductsOnSectionId($this->request->id);
+        $render_data["products"] = $this->getProducts(ProductDB::getProductsOnSectionId($this->request->id));
+
 
 		$content = $this->view->render("section", $render_data, true);
 		$this->render($content);
@@ -61,7 +68,8 @@ class MainController extends AbstractController {
         $render_data = array();
         $render_data["category_title"] = $category->title;
         $render_data["categories"] = CategoryDB::getCategoriesOnSection($category->section_id);
-        $render_data["products"] = ProductDB::getProductsOnCategoryId($category->id);
+        $render_data["products"] = $this->getProducts(ProductDB::getProductsOnCategoryId($category->id));
+
 
         $content = $this->view->render("category", $render_data, true);
         $this->render($content);
@@ -79,9 +87,26 @@ class MainController extends AbstractController {
         $render_data = array();
         $render_data["query"] = $this->request->query;
         $render_data["sections"] = SectionDB::getAllSections();
-        $render_data["products"] = ProductDB::search($this->request->query);
+        $render_data["products"] = $this->getProducts(ProductDB::search($this->request->query));
 
         $content = $this->view->render("search", $render_data, true);
+        $this->render($content);
+    }
+
+    public function actionCart() {
+
+
+        $this->title = "Корзина";
+        $this->meta_desc = "Описание главной страницы.";
+        $this->meta_key = "описание, описание главной страницы";
+
+        $render_data = array();
+        $render_data["sections"] = SectionDB::getAllSections();
+        $render_data["products"] = $_SESSION["order"];
+        $render_data["count_products"] = count($_SESSION["ordered_ids"]);
+        $render_data["sum_products"] = ProductDB::getSumAllInCart();
+
+        $content = $this->view->render("cart", $render_data, true);
         $this->render($content);
     }
 
@@ -102,6 +127,7 @@ class MainController extends AbstractController {
         $render_data["product_title"] = $product->title;
         $render_data["categories"] = CategoryDB::getCategoriesOnSection($section->id);
         $render_data["product_text"] = $product->text;
+        $render_data["product_link"] = $product->sef();
         $render_data["shop_properties"] = $product->getBaseProperties();
         $render_data["seller_properties"] = $product->getSellerProperties();
 
@@ -124,6 +150,36 @@ class MainController extends AbstractController {
 								"id" => $product->id));
 	}
 
+	public function actionOrder() {
+        if (!session_id()) session_start();
+        if (!$this->request->id) $this->redirect("/");
+        $product = new ProductDB();
+        $product->loadOnId($this->request->id);
+        if (!$product) $this->redirect(URL::get("cart"));
+        else {
+            ProductDB::addNewOrder($product);
+        }
+    }
+
+    public function actioncountcartdata() {
+	    echo count($_SESSION["ordered_ids"]);
+    }
+
+    public function actionsumcartdata() {
+        echo ProductDB::getSumAllInCart();
+    }
+
+    public function actionCancelorder() {
+
+
+        if ($this->request->id == null) $this->redirect(URL::get("cart"));
+        else {
+            $product = ProductDB::isExistsProductInCart($this->request->id);
+            if ($product) ProductDB::deleteProductInCart($this->request->id);
+        }
+        $this->redirect("/");
+    }
+
 	protected function getFullCategories() {
 		$items = CategoryDB::getAllCategoriesWithProducts();
 		$data = $this->view->render("categories_with_products", ["cats" => $items, "uri" => $this->uri], true);
@@ -142,6 +198,11 @@ class MainController extends AbstractController {
 		return $data;
 	}
 
+    protected function getProducts($items) {
+        $data = $this->view->render("products", ["products" => $items], true);
+        return $data;
+    }
+
 
 	protected function getSystemMenu() {
 		$items = SystemMenuDB::getMenu();
@@ -149,12 +210,18 @@ class MainController extends AbstractController {
 		return $data;
 	}
 
+    protected function getModal($type) {
+        $data = $this->view->render($type, [], true);
+        return $data;
+    }
+
 	protected function render($str) {
 		$params = array();
 		$params["title"] = $this->title;
         $params["meta_desc"] = $this->meta_desc;
         $params["meta_key"] = $this->meta_key;
         $params["system_menu"] = $this->getSystemMenu();
+        $params["login_modal"] = $this->getModal("login_modal");
         $params["content"] = $str;
         $this->view->render(Config::MAIN_LAYOUT, $params);
 	}

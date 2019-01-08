@@ -19,7 +19,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-4">
-                            <a href="#">
+                            <a href="<?=$product_link?>">
                                 <img src="/images/sections/1.jpg" alt="p" class="product_img"/>
                             </a>
                             <div class="col-12 bg-grey-dark shadow p-0">

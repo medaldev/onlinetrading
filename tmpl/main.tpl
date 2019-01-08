@@ -10,6 +10,7 @@
     <title><?=$title?></title>
 </head>
 <body>
+<?=$login_modal?>
 <header>
     <div class="navbar navbar-dark">
         <div class="row">
@@ -70,16 +71,16 @@
 
                     </div>
                     <div class="col-5 col-xs-12">
-                        <div class="row">
-                            <div class="col-6">
-                                <img src="/images/cart.png" class="" alt="cart" />
+                        <a href="/cart" class="text-white">
+                            <div class="row">
+                                <div class="col-6 pr-0">
+                                    <img src="/images/cart.png" class="" alt="cart" />
+                                </div>
+                                <div class="col-6 p-0 mt-4">
+                                    <p class="h5 decorated">Корзина</p>
+                                </div>
                             </div>
-                            <div class="col-6 p-0 mt-2">
-                                <p class="h5">Корзина</p>
-                                <p><b>0</b> тов.</p>
-                                <p><b>0</b> руб.</p>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -176,5 +177,6 @@
         </div>
     </div>
 </footer>
+<script src="/js/functions.js"></script>
 </body>
 </html>
