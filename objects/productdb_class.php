@@ -73,6 +73,14 @@ class ProductDB extends ObjectDB {
 		}
 		return $data;
 	}
+
+	public static function search($words) {
+		$select = self::getBaseSelect();
+		$products = self::searchObjects($select, __CLASS__, array("title"), $words, Config::MIN_SEARCH_LEN);
+		$products = self::initDataItems($products);
+
+		return $products;
+	}
 	
 	public function loadOnId($id) {
 		$product = $this->loadOnField("id", $id);
@@ -105,6 +113,12 @@ class ProductDB extends ObjectDB {
 	
 	public static function postDelete() {
 		return true;
+	}
+
+	private static function getBaseSelect() {
+		$select = new Select(self::$db);
+		$select->from(self::$table, "*");
+		return $select;
 	}
 	
 }

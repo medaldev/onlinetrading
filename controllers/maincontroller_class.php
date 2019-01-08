@@ -67,6 +67,24 @@ class MainController extends AbstractController {
         $this->render($content);
     }
 
+    public function actionSearch() {
+
+        $category = new CategoryDB();
+        $category->loadOnId($this->request->id);
+
+        $this->title = "Поиск";
+        $this->meta_desc = "Описание главной страницы.";
+        $this->meta_key = "описание, описание главной страницы";
+
+        $render_data = array();
+        $render_data["query"] = $this->request->query;
+        $render_data["sections"] = SectionDB::getAllSections();
+        $render_data["products"] = ProductDB::search($this->request->query);
+
+        $content = $this->view->render("search", $render_data, true);
+        $this->render($content);
+    }
+
     public function actionProduct() {
 
         $section = new SectionDB();

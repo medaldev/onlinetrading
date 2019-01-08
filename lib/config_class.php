@@ -15,7 +15,7 @@ abstract class Config {
 	const DIR_TMPL = "tmpl/";
 	const MAIN_LAYOUT = "main";
 	const ADMIN_LAYOUT = "admin_layout";
-	
+	const MIN_SEARCH_LEN = 2;
 	
 	
 }

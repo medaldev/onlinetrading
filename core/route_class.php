@@ -3,7 +3,6 @@
 class Route {
 
 	public static function start() {
-
         $controllers = ["Main"];
         $isset = false;
         for ($i = 0; $i < count($controllers); $i++) {
@@ -21,6 +20,7 @@ class Route {
                 if ($sef) URL::redirect(Config::ADDRESS.$sef);
             }
             $uri = URL::deleteGET($current, "id");
+            $uri = URL::deleteGET($uri, "query");
             $uri = substr($uri, 1);
             if ($uri) $action_name = $uri;
 			$controller_name = $controllers[$i];

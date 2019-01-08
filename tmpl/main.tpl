@@ -25,14 +25,14 @@
         <div class="row">
             <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-4">
-                    <form name="search" action="" method="get">
+                    <form name="search" action="/search" method="get">
                         <table>
                             <tr>
                                 <td>
-                                    <input name="words" type="text" class="circled border-0" />
+                                    <input name="query" type="text" class="circled border-0" />
                                 </td>
                                 <td>
-                                    <img src="/images/search.png" class="sign search_img" alt="" />
+                                    <button type="submit"><img src="/images/search.png" class="sign search_img" alt="" /></button>
                                 </td>
                             </tr>
                         </table>
