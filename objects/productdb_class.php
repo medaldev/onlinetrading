@@ -59,6 +59,12 @@ class ProductDB extends ObjectDB {
 		return $data;
 	}
 
+	public static function getProductsOnSellerId($id) {
+		$data = ObjectDB::getAllOnField(self::$table, __CLASS__, "seller_id", $id, "id");
+		$data = self::initDataItems($data);
+		return $data;
+	}
+
 	public static function getProductOnTitle($title) {
 		$product = new ProductDB();
 		$product->loadOnField("title", $title);

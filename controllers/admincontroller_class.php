@@ -5,125 +5,105 @@ class AdminController extends AbstractController {
 	protected $title;
 	protected $meta_desc;
 	protected $meta_key;
-	private $user;
+	protected $admin;
 
 	public function __construct() {
+		if (!session_id()) {
+			session_start();
+			if (!$_SESSION['order']) $_SESSION['order'] = array();
+			if (!$_SESSION['ordered_ids']) $_SESSION['ordered_ids'] = array();
+		}
+		else {
+			$this->admin = UserDB::authAdmin();
+
+		}
 		parent::__construct(new View(Config::DIR_TMPL));
-		if (!session_id()) session_start();
 	}
+
 
 	public function actionAdmin() {
-		//print_r(UserDB::auth($this->request->login, $this->request->password));
-		if (UserDB::auth($this->request->login, $this->request->password) || UserDB::authAdmin($_SESSION["auth_login"], $_SESSION["auth_password"])) $this->redirect("/editproducts");
-		$this->title = "";
-		$this->meta_desc = "";
-		$this->meta_key = "";
-		$content = $this->view->render("admin_auth", [], true);
+		if (!$this->admin) $this->redirect("/");
+		$this->title = "Кабинет администратора";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+
+		$content = $this->view->render("admin_index", $render_data, true);
 		$this->render($content);
 	}
 
-	public function actionEditproducts() {
-		if (!UserDB::authAdmin($_SESSION["auth_login"], $_SESSION["auth_password"])) $this->redirect("/admin");
-		$this->title = "Управление товарами";
-		$this->meta_desc = "";
-		$this->meta_key = "";
-		$items = ProductDB::getAllProducts();
-		$content = $this->view->render("admin_products", ["items" => $items, "modal_edit_product" => $this->getModalEditProduct()], true);
-		$this->render($content);
-				
+	public function actionSellers() {
+		if (!$this->admin) $this->redirect("/");
 
+		$this->title = "Управление продавцами";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["sellers"] = SellerDB::getAllSellers();
+
+		$content = $this->view->render("admin_sellers", $render_data, true);
+		$this->render($content);
 	}
-	
-	public function actionEditcategories() {
-		if (!UserDB::authAdmin($_SESSION["auth_login"], $_SESSION["auth_password"])) $this->redirect("/admin");
+
+	public function actionOrders_statistics() {
+		if (!$this->admin) $this->redirect("/");
+
+		$this->title = "Управление заказами";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["orders_count"] = OrderDB::getCount();
+		$render_data["orders_price"] = OrderDB::getPriceOrders();
+
+		$content = $this->view->render("admin_orders_statistics", $render_data, true);
+		$this->render($content);
+	}
+
+	public function actionEditSections() {
+		if (!$this->admin) $this->redirect("/");
+
+		$this->title = "Управление разделами";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["sections"] = SectionDB::getAllSections();
+
+		$content = $this->view->render("admin_editsections", $render_data, true);
+		$this->render($content);
+	}
+
+	public function actionEditCategories() {
+		if (!$this->admin) $this->redirect("/");
+
 		$this->title = "Управление категориями";
-		$this->meta_desc = "";
-		$this->meta_key = "";
-		$items = CategoryDB::getAllCategories();
-		$content = $this->view->render("admin_categories", ["items" => $items, "modal_edit_category" => $this->getModalEditCategory()], true);		
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["categories"] = CategoryDB::getAllCategories();
+
+		$content = $this->view->render("admin_categories", $render_data, true);
 		$this->render($content);
 	}
-	
-	public function actionGetdatacategory() {
-		if (!$this->request->id) $this->redirect("/");
-		$cat = new CategoryDB();
-		$cat->loadOnId($this->request->id);
-		echo json_encode(array("title" => $cat->title, 
-								"text" => $cat->text, 
-								"id" => $cat->id));
+
+	public function actionEditTopics() {
+		if (!$this->admin) $this->redirect("/");
+
+		$this->title = "Управление секциями";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["topics"] = TopicDB::getAllTopics();
+
+		$content = $this->view->render("admin_edittopics", $render_data, true);
+		$this->render($content);
 	}
-	
-	public function actionsaveproduct() {
-		if (!UserDB::authAdmin($_SESSION["auth_login"], $_SESSION["auth_password"])) $this->redirect("/admin");
-		$id = $this->request->id;
-		$title = $this->request->title;
-		$img = $this->request->img;
-		$text = $this->request->text;
-		$category = $this->request->category;
-		
-		$product = new ProductDB();
-		if ($this->request->id) $product->loadOnId($this->request->id);
-		$cat = new CategoryDB();
-		$cat->loadOnTitle($this->request->category);
-		$product->loadOnId($id);
-		$product->title = $this->request->title;
-		$product->img = $this->request->img;
-		$product->category_id = $cat->id;
-		$product->text = $this->request->text;
-		$product->save();
-		echo $product->id;
-		
-	}
-	
-	public function actionsavecategory() {
-		if (!UserDB::authAdmin($_SESSION["auth_login"], $_SESSION["auth_password"])) $this->redirect("/admin");
-		$id = $this->request->id;
-		$title = $this->request->title;
-		$text = $this->request->text;
-		
-		
-		$cat = new CategoryDB();
-		if ($this->request->id) $cat->loadOnId($this->request->id);
-		$cat->title = $this->request->title;
-		$cat->text = $this->request->text;
-		$cat->save();
-		echo $cat->id;
-		
-	}
-	
-	public function actiondeleteproduct() {
-		if (!UserDB::authAdmin($_SESSION["auth_login"], $_SESSION["auth_password"])) $this->redirect("/admin");
-		$id = $this->request->id;
-		if (!$id) $this->redirect("/admin");
-		$product = new ProductDB();
-		$product->loadOnId($id);
-		$product->delete();
-		echo true;
-	}
-	
-	public function actiondeletecategory() {
-		if (!UserDB::authAdmin($_SESSION["auth_login"], $_SESSION["auth_password"])) $this->redirect("/admin");
-		$id = $this->request->id;
-		if (!$id) $this->redirect("/admin");
-		$cat = new CategoryDB();
-		$cat->loadOnId($id);
-		$cat->delete();
-		echo true;
-	}
-	
-	protected function getModalEditProduct() {
-		return $this->view->render("admin_modal_editproduct", ["categories" => CategoryDB::getAllCategories()], true);
-	}
-	
-	protected function getModalEditCategory() {
-		return $this->view->render("admin_modal_editcategory", [], true);
-	}
-	
-	protected function getTopMenu() {
-		$items = MenuDB::getAdminTopMenu();
-		$data = $this->view->render("topmenu", ["items" => $items, "uri" => $this->uri], true);
-		return $data;
-	}
+
 
 
 	protected function render($str) {
@@ -131,12 +111,13 @@ class AdminController extends AbstractController {
 		$params["title"] = $this->title;
 		$params["meta_desc"] = $this->meta_desc;
 		$params["meta_key"] = $this->meta_key;
-		$params["topmenu"] = $this->getTopMenu();
+		$params["user_login"] = $this->admin->login;
+		$params["user_menu"] = AdminMenuDB::getAdminMenu();
+
 		$params["content"] = $str;
 		$this->view->render(Config::ADMIN_LAYOUT, $params);
 	}
 
 }
-
 
 ?>

@@ -21,6 +21,24 @@ class OrderDB extends ObjectDB {
         return $data;
     }
 
+    public static function getAllOrders() {
+        return self::getAll(__CLASS__, self::$table);
+    }
+
+    public static function getCountOrders() {
+        return self::getCount();
+    }
+
+    public static function getPriceOrders() {
+        $result = 0;
+        $data = self::getAllOrders();
+        foreach ($data as $item) {
+            $result += $item->price;
+
+        }
+        return $result;
+    }
+
     private static function initOrdersTitles($data) {
         foreach ($data as $element) {
             $product = new ProductDB();

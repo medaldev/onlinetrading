@@ -183,11 +183,22 @@ class MainController extends AbstractController {
     }
 
     public function actionAuth() {
-	    if ($this->request->type == "Пользователь") {
-            $user = UserDB::authUser($this->request->login, $this->request->password);
-            if ($user) echo "user";
+	    switch ($this->request->type) {
+            case "Пользователь":
+                $user = UserDB::authUser($this->request->login, $this->request->password);
+                if ($user) echo "user";
+                break;
+            case "Модератор":
+                $user = UserDB::authSeller($this->request->login, $this->request->password);
+                if ($user) echo "seller";
+                break;
+            case "Администратор":
+                $user = UserDB::authAdmin($this->request->login, $this->request->password);
+                if ($user) echo "admin";
+                break;
+            default:
+                echo "";
         }
-	    echo "";
     }
 
     public function actionLogout() {

@@ -3,7 +3,7 @@
 class Route {
 
 	public static function start() {
-        $controllers = ["Main", "User"];
+        $controllers = ["Main", "User", "Seller", "Admin"];
         $isset = false;
         for ($i = 0; $i < count($controllers); $i++) {
             $action_name = "index";

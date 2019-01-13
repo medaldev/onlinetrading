@@ -9,6 +9,7 @@ class CategoryDB extends ObjectDB {
 		$this->add("id");
 		$this->add("section_id");
 		$this->add("title");
+		$this->add("text");
 		$this->link = "/category?id=".$this->id;
 		$this->sef = SefDB::getAliasOnLink($this->link);
 	}

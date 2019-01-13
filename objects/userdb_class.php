@@ -59,11 +59,17 @@ class UserDB extends ObjectDB {
 		return $this->password === self::hash($password, Config::SECRET);
 	}
 	
-	public static function authAdmin($login, $password) {
-		$admin = self::auth($login, $password, false);
-		if ($admin && $admin->is_admin) return true;
+	public static function authAdmin($login=false, $password=false) {
+		$admin = self::auth($login, $password);
+		if ($admin && $admin->is_admin) return $admin;
 		return false;
 	}
+
+    public static function authSeller($login=false, $password=false) {
+        $seller = self::auth($login, $password);
+        if ($seller && $seller->is_moderator) return $seller;
+        return false;
+    }
 
 	public static function authUser($login=false, $password=false) {
 		return self::auth($login, $password);
