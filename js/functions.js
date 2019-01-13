@@ -4,13 +4,10 @@ function closeWindow(id) {
 	document.getElementById(id).style.display = "none";
 }
 
-function openWindow(id, img, name) {
+function openWindow(id, name) {
 	var el = document.getElementById(id);
 	el.style.animation = "1s open";
 	el.style.display = "block";
-	document.querySelector("#cm_img").src = img;
-	document.querySelector("#cm_h5").innerHTML = name;
-	setTimeout("closeWindow('addToCart')", 4000);
 }
 
 function edit_category() {
@@ -54,6 +51,7 @@ function addProductInCart(id, button) {
 }
 
 function cancelorder(id, button) {
+	if (!confirm("Вы уверенны?")) return false;
 	var xmlhttp = getXmlHttp();
 	xmlhttp.open('POST', SITENAME + 'cancelorder', true);
 	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -126,16 +124,17 @@ function updateDataCountCart(id) {
 function authuser() {
 	login = document.querySelector("#userlogin").value;
 	password = document.querySelector("#userpassword").value;
+	type = document.querySelector("#AuthType").value;
 	message = document.querySelector("#auth_message");
 	var xmlhttp = getXmlHttp();
-	xmlhttp.open('POST', 'http://oc.local/auth', true); 
+	xmlhttp.open('POST', SITENAME + 'auth', true);
 	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	xmlhttp.send("login=" + encodeURIComponent(login) + "&" + "password=" + encodeURIComponent(password));
+	xmlhttp.send("login=" + encodeURIComponent(login) + "&" + "password=" + encodeURIComponent(password) + "&" + "type=" + encodeURIComponent(type));
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4) {
 			if(xmlhttp.status == 200) {
-				if (xmlhttp.responseText == "error") message.innerHTML = "Неправильные логин и/или пароль!";
-				else window.location.href="user";
+				if (xmlhttp.responseText == "") message.innerHTML = "Неправильные логин и/или пароль!";
+				else window.location.href=xmlhttp.responseText;
 			}
 		}
 	};

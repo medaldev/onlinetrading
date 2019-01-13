@@ -14,6 +14,7 @@ abstract class Config {
 	const DIR_AVATARS = self::DIR_IMAGES."marks/";
 	const DIR_TMPL = "tmpl/";
 	const MAIN_LAYOUT = "main";
+	const USER_LAYOUT = "user";
 	const ADMIN_LAYOUT = "admin_layout";
 	const MIN_SEARCH_LEN = 2;
 	

@@ -66,6 +66,12 @@ class ProductDB extends ObjectDB {
 		return $product;
 	}
 
+	public static function getTitleOnId($id) {
+		$product = new ProductDB();
+		$product->loadOnField("id", $id);
+		return $product->title;
+	}
+
 	public static function initDataItems($data) {
 		foreach ($data as $d) {
 			$d->link = "/product?id=".$d->id;
@@ -120,6 +126,14 @@ class ProductDB extends ObjectDB {
 		}
 		unset($_SESSION["ordered_ids"][array_search($id, $_SESSION["ordered_ids"])]);
 
+	}
+
+	public static function getRecomended($cat_id, $count) {
+		$products = ProductDB::getProductsOnCategoryId($cat_id);
+		$result = array_rand($products, $count);
+		$data = array();
+		foreach ($result as $r) $data[$r] = $products[$r];
+		return $data;
 	}
 
 	public function loadOnId($id) {

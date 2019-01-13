@@ -57,7 +57,7 @@
                                 <img src="/images/user1_add.png" class="sign" alt="d" />
                             </div>
                             <div class="col-10">
-                                <p>Кабинет пользователя</p>
+                                <p onclick="openWindow('login');" class="pointer" >Кабинет пользователя</p>
                             </div>
                         </div>
                         <div class="row p-1	">

@@ -128,8 +128,10 @@ class MainController extends AbstractController {
         $render_data["categories"] = CategoryDB::getCategoriesOnSection($section->id);
         $render_data["product_text"] = $product->text;
         $render_data["product_link"] = $product->sef();
+        $render_data["product_id"] = $product->id;
         $render_data["shop_properties"] = $product->getBaseProperties();
         $render_data["seller_properties"] = $product->getSellerProperties();
+        $render_data["products"] = $this->getProducts(ProductDB::getRecomended($category->id, 3));
 
         $content = $this->view->render("product", $render_data, true);
         $this->render($content);
@@ -178,6 +180,19 @@ class MainController extends AbstractController {
             if ($product) ProductDB::deleteProductInCart($this->request->id);
         }
         $this->redirect("/");
+    }
+
+    public function actionAuth() {
+	    if ($this->request->type == "Пользователь") {
+            $user = UserDB::authUser($this->request->login, $this->request->password);
+            if ($user) echo "user";
+        }
+	    echo "";
+    }
+
+    public function actionLogout() {
+	    UserDB::logout();
+	    $this->redirect("/");
     }
 
 	protected function getFullCategories() {

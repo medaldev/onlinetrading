@@ -11,6 +11,7 @@ class UserDB extends ObjectDB {
 		$this->add("login");
 		$this->add("password");
 		$this->add("is_admin");
+		$this->add("is_moderator");
 	}
 	
 	public static function reg($login, $password, $password_repeat) {
@@ -45,12 +46,7 @@ class UserDB extends ObjectDB {
 		if (!is_null($this->new_password)) $this->password = self::hash($this->new_password, Config::SECRET);
 		return true;
 	}
-	
-	public function login() {
-		if (!session_id()) session_start();
-		$_SESSION["auth_login"] = $this->login;
-		$_SESSION["auth_password"] = $this->password;
-	}
+
 	
 	public static function logout() {
 		if (!session_id()) session_start();
@@ -70,37 +66,28 @@ class UserDB extends ObjectDB {
 	}
 
 	public static function authUser($login=false, $password=false) {
-		$user = self::auth($login, $password, false);
-		if (!$user) return false;
-		if (!$user->is_admin) return true;
+		return self::auth($login, $password);
 	}
 
 	
-	public static function auth($login = false, $password = false, $shifrate=true) {
-		if ($login) $auth = true;
-		else {
-			if (!session_id()) session_start();
-			if (!empty($_SESSION["auth_login"]) && !empty($_SESSION["auth_password"])) {
-				$login = $_SESSION["auth_login"];
-				$password = $_SESSION["auth_password"];
-			}
-			else return;
-			$auth = false;
-		}
-		$user = new UserDB();
-		if ($auth && $shifrate) $password = self::hash($password, "");
-		$select = new Select();
-		$select->from(self::$table, array("COUNT(id)"))
-			->where("`login` = ".self::$db->getSQ(), array($login))
-			->where("`password` = ".self::$db->getSQ(), array($password));
-		$count = self::$db->selectCell($select);
-		if ($count) {
-			$user->loadOnLogin($login);
-			if ($auth) $user->login();
-			return $user;
-		}
-		return false;
-		//if ($auth) throw new Exception("ERROR_AUTH_USER");
+	public static function auth($login = false, $password = false) {
+		if (!session_id()) session_start();
+        if (!$login || !$password) {
+            if (!empty($_SESSION["auth_login"]) && !empty($_SESSION["auth_password"])) {
+                $login = $_SESSION["auth_login"];
+                $password = $_SESSION["auth_password"];
+            }
+            else return false;
+        }
+        else $password = self::hash($password, "");
+        $user = new UserDB();
+		$user->loadOnLogin($login);
+		if ($user->password == $password) {
+            $_SESSION["auth_login"] = $login;
+            $_SESSION["auth_password"] = $password;
+		    return $user;
+        }
+		else return false;
 	}
 	
 	public function getSecretKey() {

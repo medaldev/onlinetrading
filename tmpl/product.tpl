@@ -1,3 +1,5 @@
+<?php $in_order = in_array($product_id, $_SESSION['ordered_ids']);?>
+<?php $text_button = in_array($product_id, $_SESSION['ordered_ids']) ? 'В корзине' : 'В корзину!';?>
 <div class="container">
     <div class="row">
         <div class="col-3 mt-5 bg-grey-dark shadow p-0">
@@ -22,9 +24,8 @@
                             <a href="<?=$product_link?>">
                                 <img src="/images/sections/1.jpg" alt="p" class="product_img"/>
                             </a>
-                            <div class="col-12 bg-grey-dark shadow p-0">
-                                <h2 class="h6 text-white pt-2 pb-2 bg-dark pt-2 pb-2 text-center">В корзину!</h2>
-
+                            <div class="col-12 bg-grey-dark shadow p-0" onclick="addProductInCart(<?=$product_id?>, this)">
+                                <h2 class="pointer h6 text-white pt-2 pb-2 bg-dark pt-2 mt-3 pb-2 text-center <?if ($in_order) echo 'button_clicked'?>"><?=$text_button?></h2>
                             </div>
                         </div>
                         <div class="col-lg-8">
@@ -57,7 +58,7 @@
                     </div>
                 </div>
             </div>
-
+            <?=$products?>
         </div>
     </div>
 </div>
