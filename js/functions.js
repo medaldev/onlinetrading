@@ -61,12 +61,22 @@ function cancelorder(id, button) {
 			if(xmlhttp.status == 200) {
 				var current = button.parentElement.parentElement.parentElement;
 				current.parentElement.removeChild(current);
-				updateDataSumCart(id);
-				updateDataCountCart(id);
+				reload_cart();
 			}
 		}
 	};
 	
+}
+
+function reload_cart() {
+	var promo = document.querySelector("#promo").value;
+	if (promo) {
+		updateDataSumCart(promo);
+	}
+	else {
+		updateDataSumCart();
+	}
+	updateDataCountCart();
 }
 
 function delwish(id) {
@@ -88,13 +98,13 @@ function delwish(id) {
 	
 }
 
-function updateDataSumCart(id) {
+function updateDataSumCart(promo=false) {
 	var sum = document.querySelector("#price_products");
 	var xmlhttp = getXmlHttp();
 	xmlhttp.open('POST', SITENAME + 'sumcartdata', true);
-	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
-	xmlhttp.send("id=" + encodeURIComponent(id));
-	xmlhttp.onreadystatechange = function() { 
+	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	if (promo) xmlhttp.send("promo=" + encodeURIComponent(promo));
+	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4) { 
 			if(xmlhttp.status == 200) {
 				sum.innerHTML = xmlhttp.responseText;
@@ -105,12 +115,12 @@ function updateDataSumCart(id) {
 	
 }
 
-function updateDataCountCart(id) {
+function updateDataCountCart() {
 	var count = document.querySelector("#count_products");
 	var xmlhttp = getXmlHttp();
 	xmlhttp.open('POST', SITENAME + 'countcartdata', true);
 	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	xmlhttp.send("id=" + encodeURIComponent(id));
+	xmlhttp.send();
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4) {
 			if(xmlhttp.status == 200) {
@@ -140,10 +150,38 @@ function authuser() {
 	};
 }
 
-function initWishlist() {
-	if (window.location.href==SITENAME+"wishlist") {
-		var ar = document.getElementById("area");
-		var els = document.getElementsByClassName("wishlist");
-		if (els.length == 0) ar.innerHTML = "<div class='message'>Список пуст.</div>";
-	}
+function reg() {
+	login = document.querySelector("#reg_login").value;
+	password = document.querySelector("#reg_password").value;
+	var xmlhttp = getXmlHttp();
+	xmlhttp.open('POST', SITENAME + 'register', true);
+	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xmlhttp.send("login=" + encodeURIComponent(login) + "&" + "password=" + encodeURIComponent(password));
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4) {
+			if(xmlhttp.status == 200) {
+				alert(xmlhttp.responseText);
+				if (xmlhttp.responseText == 1) {
+					alert("Регистрация прошла успешно!");
+				}
+			}
+		}
+	};
+}
+
+function filter(id) {
+	var xmlhttp = getXmlHttp();
+	xmlhttp.open('POST', SITENAME + 'filter', true);
+	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xmlhttp.send("id=" + encodeURIComponent(id));
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4) {
+			if(xmlhttp.status == 200) {
+				button.children[0].innerHTML = "В корзине";
+				button.children[0].classList.remove("bg-grey-dark");
+				button.children[0].classList.add("text-dark");
+				button.children[0].classList.add("button_clicked");
+			}
+		}
+	};
 }

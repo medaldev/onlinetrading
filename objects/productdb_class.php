@@ -15,6 +15,7 @@ class ProductDB extends ObjectDB {
 		$this->add("seller_id");
 		$this->add("price");
 		$this->add("wholesale");
+		$this->add("properties");
 	}
 
 
@@ -40,11 +41,20 @@ class ProductDB extends ObjectDB {
 		return $properties;
 	}
 
+	public function getProperties() {
+		return explode(",", $this->properties);
+	}
+
 	public function getSellerProperties() {
-		$property_object = new PropertiesProductDB();
-		$property_object->getPropertiesOnProductId($this->id);
-		$property_object->ProperiesArray();
-		return $property_object->properties_list;
+		$category = new CategoryDB();
+		$category->loadOnId($this->category_id);
+		$names = $category->getProperties();
+		$values = $this->getProperties();
+		$properties = array();
+		for ($i = 0; $i < count($names); $i++) {
+			$properties[$names[$i]] = $values[$i];
+		}
+		return $properties;
 	}
 	
 	public static function getProductsOnCategoryId($id) {

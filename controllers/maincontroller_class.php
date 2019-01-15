@@ -56,6 +56,31 @@ class MainController extends AbstractController {
 		$this->render($content);
 	}
 
+    public function actionReg() {
+        //unset($_SESSION["order"]);
+        //unset($_SESSION["ordered_ids"]);
+
+
+
+        $this->title = "Регистрация";
+        $this->meta_desc = "Описание главной страницы.";
+        $this->meta_key = "описание, описание главной страницы";
+
+        $render_data = array();
+        $render_data["categories"] = SectionDB::getAllSections();
+
+
+        $content = $this->view->render("reg", $render_data, true);
+        $this->render($content);
+    }
+
+    public function actionRegister() {
+        if ($this->request->login) {
+            echo UserDB::reg($this->request->login, $this->request->password, $this->request->password);
+
+        }
+    }
+
     public function actionCategory() {
 
         $category = new CategoryDB();
@@ -168,7 +193,11 @@ class MainController extends AbstractController {
     }
 
     public function actionsumcartdata() {
-        echo ProductDB::getSumAllInCart();
+	    $promo = new PromoDB();
+	    $promo->loadOnCode($this->request->promo);
+	    $procent =  $promo->procent;
+	    if (!$procent) $procent = 1;
+        echo ProductDB::getSumAllInCart() * $procent;
     }
 
     public function actionCancelorder() {
