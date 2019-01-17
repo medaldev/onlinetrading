@@ -14,6 +14,8 @@
             </div>
             <div class="row center">
                 <div class="col-12 mt-4 bg-white p-4 shadow">
+                    <h1 class="h2 text-center mt-3 mb-5">Регистрация пользователя</h1>
+
                     <div class="row mt-2">
                         <div class="col-1">
                             <p>Логин:</p>

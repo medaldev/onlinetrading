@@ -103,7 +103,7 @@ function updateDataSumCart(promo=false) {
 	var xmlhttp = getXmlHttp();
 	xmlhttp.open('POST', SITENAME + 'sumcartdata', true);
 	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	if (promo) xmlhttp.send("promo=" + encodeURIComponent(promo));
+	xmlhttp.send("promo=" + encodeURIComponent(promo));
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4) { 
 			if(xmlhttp.status == 200) {

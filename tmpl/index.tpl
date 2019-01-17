@@ -15,9 +15,9 @@
         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-4">
             <div class="block section shadow">
                 <a href="/<?=$section->sef?>">
-                    <img src="/images/sections/1.jpg" alt="p" class="sections_img"/>
+                    <img src="/images/topics/<?=$section->img?>" alt="p" class="sections_img"/>
                     <h3 class="h3 text-dark text-center mt-3"><?=$section->title?></h3>
-                    <p class="text-grey p-4"><?=$section->text?></p>
+                    <p class="text-grey p-4"><?=substr($section->text, 0, 202)."..."?></p>
                     <p class="text-right h2 pr-3 pb-1">&gt;</p>
                 </a>
             </div>

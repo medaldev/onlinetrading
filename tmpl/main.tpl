@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/bootstrap-grid.css">
     <link rel="stylesheet" href="/css/static.css">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="icon" sizes="32x32" type="image/png" href="http://onlinetrading/favicon.png">
+    <link href="/favicon.png" rel="shortcut icon" type="image/x-icon" />
     <title><?=$title?></title>
 </head>
 <body>
@@ -30,26 +30,26 @@
                         <table>
                             <tr>
                                 <td>
-                                    <input name="query" type="text" class="circled border-0" />
+                                    <input name="query" placeholder="поиск..." type="text" class="circled border-0 p-1" />
                                 </td>
                                 <td>
-                                    <button type="submit"><img src="/images/search.png" class="sign search_img" alt="" /></button>
+                                    <button class="bg-no search_img" type="submit"><img src="/images/search.png" class="sign " alt="" /></button>
                                 </td>
                             </tr>
                         </table>
                     </form>
-                    <a href="" class="text-white decorated fs-little">Расширенный поиск</a>
+                    <!--<a href="" class="text-white decorated fs-little">Расширенный поиск</a>-->
                 </div>
             </div>
             <div class="col-lg-6 col-md-7 col-sm-12 col-xs-12 text-white">
                 <div class="row mt-1">
                     <div class="col-7">
-                        <div class="row p-1">
+                        <div class="row p-1 mt-3">
                             <div class="col-2">
                                 <img src="/images/user1_add.png" class="sign" alt="d" />
                             </div>
                             <div class="col-10">
-                                <p>Регистрация</p>
+                                <a href="/reg" class="text-white">Регистрация</a>
                             </div>
                         </div>
                         <div class="row p-1">
@@ -60,14 +60,7 @@
                                 <p onclick="openWindow('login');" class="pointer" >Кабинет пользователя</p>
                             </div>
                         </div>
-                        <div class="row p-1	">
-                            <div class="col-2">
-                                <img src="/images/user1_add.png" class="sign" alt="d" />
-                            </div>
-                            <div class="col-10">
-                                <p>Кабинет модератора</p>
-                            </div>
-                        </div>
+
 
                     </div>
                     <div class="col-5 col-xs-12">

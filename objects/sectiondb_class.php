@@ -12,6 +12,7 @@ class SectionDB extends ObjectDB {
         $this->add("id");
         $this->add("title");
         $this->add("topic_id");
+        $this->add("img");
         $this->add("text");
         $this->link = "/section?id=".$this->id;
         $this->sef = SefDB::getAliasOnLink($this->link);

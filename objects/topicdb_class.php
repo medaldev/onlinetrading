@@ -8,6 +8,7 @@ class TopicDB extends ObjectDB {
         parent::__construct(self::$table);
         $this->add("id");
         $this->add("title");
+        $this->add("img");
         $this->add("sef");
         $this->add("meta_key");
         $this->add("meta_desk");

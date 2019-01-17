@@ -21,11 +21,8 @@
                     <div class="col-3">
                         <p class="m-1">Стоимость</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <p class="m-1">Название товара</p>
-                    </div>
-                    <div class="col-2">
-                        <p class="m-1">Кол-во</p>
                     </div>
                     <div class="col-2">
                         <p class="m-1">Удалить</p>
@@ -41,11 +38,8 @@
                     <div class="col-3">
                         <p class="m-1"><?=$product->price?></p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <p class="m-1"><?=$product->title?></p>
-                    </div>
-                    <div class="col-2">
-                        <p class="m-1"><input type="number" name="count" value="1" min="1"></p>
                     </div>
                     <div class="col-2">
                         <p class="m-1 dec pointer" onclick="cancelorder(<?=$product->id?>, this)">Удалить</p>

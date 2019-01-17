@@ -46,7 +46,10 @@
                 <p class="m-1"><?=$product->text?></p>
             </div>
             <div class="col-1 text-center">
-                <img src="/images/edit.png" alt="edit" class="sign_img pointer">
+                <a href="/editproduct?id=<?=$product->id?>">
+                    <img src="/images/edit.png" alt="edit" class="sign_img pointer">
+                </a>
+
             </div>
             <div class="col-1 text-center">
                 <img src="/images/delete.png" alt="edit" class="sign_img pointer">

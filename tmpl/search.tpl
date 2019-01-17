@@ -12,10 +12,6 @@
             <div class="col-lg-12 bg-dark shadow">
                 <h2 class="h5 text-white pt-2 pb-2">Результаты по запросу &laquo;<?=$query?>&raquo;</h2>
             </div>
-            <div class="text-center mt-4 mb-1">
-                <span class="decorated m-1 bold pointer">Фильтровать</span>
-                <span class="decorated m-1 bold pointer">Сортировка</span>
-            </div>
             <?=$products?>
         </div>
     </div>
