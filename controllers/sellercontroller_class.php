@@ -52,14 +52,19 @@ class SellerController extends AbstractController {
 
     public function actionEditProduct() {
         if (!$this->seller) $this->redirect("/");
-        if (!$this->request->id) $this->redirect("/");
         $product = new ProductDB();
-        $product->loadOnId($this->request->id);
+        if ($this->request->id) $product->loadOnId($this->request->id);
         if ($this->request->product_name) {
             $product->title = $this->request->product_name;
             $product->img = $this->request->product_img;
             $product->price = $this->request->product_price;
+            $product->text = $this->request->text;
             $product->category_id = $this->request->product_category_id;
+            $cat = new CategoryDB();
+            $cat->loadOnId($this->request->product_category_id);
+            $product->section_id = $cat->section_id;
+            $product->seller_id = $this->seller->id;
+            $product->wholesale = 0;
             $product->save();
             $this->redirect("/editproducts");
         }

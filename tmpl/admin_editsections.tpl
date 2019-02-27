@@ -16,14 +16,11 @@
             <div class="col-2">
                 <p class="m-1">Секция</p>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <p class="m-1">Описание</p>
             </div>
             <div class="col-1">
                 <p class="m-1">Ред.</p>
-            </div>
-            <div class="col-1">
-                <p class="m-1">Удалить</p>
             </div>
         </div>
     </div>
@@ -42,14 +39,13 @@
             <div class="col-2">
                 <p class="m-1"><?=$section->topic_id?></p>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <p class="m-1"><?=$section->text?></p>
             </div>
             <div class="col-1 text-center">
-                <img src="/images/edit.png" alt="edit" class="sign_img pointer">
-            </div>
-            <div class="col-1 text-center">
-                <img src="/images/delete.png" alt="edit" class="sign_img pointer">
+                <a href="/editsection?id=<?=$section->id?>">
+                    <img src="/images/edit.png" alt="edit" class="sign_img pointer">
+                </a>
             </div>
         </div>
     </div>

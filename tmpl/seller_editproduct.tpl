@@ -27,7 +27,7 @@
                         <td colspan="2">Описание</td>
                     </tr>
                     <tr>
-                        <td colspan="2"><textarea cols="10" rows="10"><?=$product->text?></textarea></td>
+                        <td colspan="2"><textarea name="text" cols="10" rows="10"><?=$product->text?></textarea></td>
                     </tr>
                     <tr>
                         <td colspan="2">

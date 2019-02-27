@@ -10,14 +10,11 @@
             <div class="col-3">
                 <p class="m-1">Название</p>
             </div>
-            <div class="col-6">
+            <div class="col-7">
                 <p class="m-1">Описание</p>
             </div>
             <div class="col-1">
                 <p class="m-1">Ред.</p>
-            </div>
-            <div class="col-1">
-                <p class="m-1">Удалить</p>
             </div>
         </div>
     </div>
@@ -31,14 +28,13 @@
                 <p class="m-1"><?=$seller->title?></p>
             </div>
 
-            <div class="col-6">
+            <div class="col-7">
                 <p class="m-1"><?=$seller->text?></p>
             </div>
             <div class="col-1 text-center">
-                <img src="/images/edit.png" alt="edit" class="sign_img pointer">
-            </div>
-            <div class="col-1 text-center">
-                <img src="/images/delete.png" alt="edit" class="sign_img pointer">
+                <a href="/editseller?id=<?=$seller->id?>">
+                    <img src="/images/edit.png" alt="edit" class="sign_img pointer">
+                </a>
             </div>
         </div>
     </div>

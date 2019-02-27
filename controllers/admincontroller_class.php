@@ -47,6 +47,91 @@ class AdminController extends AbstractController {
 		$this->render($content);
 	}
 
+	public function actionEditSeller() {
+		if (!$this->admin) $this->redirect("/");
+		$seller = new SellerDB();
+		if ($this->request->id) $seller->loadOnId($this->request->id);
+		if ($this->request->title) {
+			$seller->title = $this->request->title;
+			$seller->text = $this->request->text;
+			$seller->save();
+			$this->redirect("/sellers");
+		}
+		$this->title = "Управление торговой организацией";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["seller"] = $seller;
+
+		$content = $this->view->render("admin_editseller", $render_data, true);
+		$this->render($content);
+	}
+
+	public function actionEditSection() {
+		if (!$this->admin) $this->redirect("/");
+		$section = new SectionDB();
+		if ($this->request->id) $section->loadOnId($this->request->id);
+		if ($this->request->title) {
+			$section->title = $this->request->title;
+			$section->img = $this->request->img;
+			$section->topic_id = $this->request->topic_id;
+			$section->text = $this->request->text;
+			$section->save();
+			$this->redirect("/editsections");
+		}
+		$this->title = "Управление разделом";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["section"] = $section;
+
+		$content = $this->view->render("admin_editsection", $render_data, true);
+		$this->render($content);
+	}
+
+	public function actionEditCategory() {
+		if (!$this->admin) $this->redirect("/");
+		$category = new CategoryDB();
+		if ($this->request->id) $category->loadOnId($this->request->id);
+		if ($this->request->title) {
+			$category->title = $this->request->title;
+			$category->section_id = $this->request->section_id;
+			$category->save();
+			$this->redirect("/editcategories");
+		}
+		$this->title = "Управление категорией";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["category"] = $category;
+
+		$content = $this->view->render("admin_editcategory", $render_data, true);
+		$this->render($content);
+	}
+
+	public function actionEditTopic() {
+		if (!$this->admin) $this->redirect("/");
+		$topic = new TopicDB();
+		if ($this->request->id) $topic->loadOnId($this->request->id);
+		if ($this->request->title) {
+			$topic->title = $this->request->title;
+			$topic->save();
+			$this->redirect("/edittopics");
+		}
+		$this->title = "Управление разделом";
+		$this->meta_desc = "Описание главной страницы.";
+		$this->meta_key = "описание, описание главной страницы";
+		$render_data = array();
+		$render_data["title"] = $this->title;
+		$render_data["topic"] = $topic;
+
+		$content = $this->view->render("admin_edittopic", $render_data, true);
+		$this->render($content);
+	}
+
 	public function actionOrders_statistics() {
 		if (!$this->admin) $this->redirect("/");
 

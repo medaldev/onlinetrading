@@ -28,6 +28,40 @@ class TopicDB extends ObjectDB {
         return $topics;
     }
 
+    public function loadOnId($id) {
+        return $this->loadOnField("id", $id);
+    }
+
+
+    public static function postLoad() {
+        return true;
+    }
+
+    public static function postInsert() {
+        return true;
+    }
+
+    public static function preUpdate() {
+        return true;
+    }
+
+    public static function preInsert() {
+        return true;
+    }
+
+    public static function postUpdate() {
+        return true;
+    }
+
+    public static function preDelete() {
+        return true;
+    }
+
+    public static function postDelete() {
+        return true;
+    }
+
+
 
 }
 
