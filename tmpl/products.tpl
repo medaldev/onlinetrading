@@ -3,8 +3,8 @@
     <?php $in_order = in_array($product->id, $_SESSION['ordered_ids']);?>
     <?php $text_button = in_array($product->id, $_SESSION['ordered_ids']) ? 'В корзине' : 'В корзину!';?>
     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mt-4">
-        <div class="block text-center product shadow">
-            <a href="<?=$product->sef?>">
+        <div class="block text-center product shadow pt-4">
+            <a href="<?=($product->sef) ? $product->sef : '/product?id='.$product->id ?>">
                 <img src="/images/products/<?=$product->img?>" alt="p" class="products_img"/>
                 <h3 class="h4 text-dark text-center mt-2"><?=$product->title?></h3>
                 <p class="text-grey p-2 text_intro text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>

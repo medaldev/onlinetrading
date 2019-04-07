@@ -12,11 +12,10 @@
             <div class="col-lg-12 bg-dark shadow">
                 <h2 class="h5 text-white pt-2 pb-2"><?=$category_title?></h2>
             </div>
-            <!--
             <div class="text-center mt-4 mb-1">
                 <span class="decorated m-1 bold pointer">Фильтровать</span>
                 <span class="decorated m-1 bold pointer">Сортировка</span>
-            </div>-->
+            </div>
             <?=$products?>
             <div class="text-center mt-4 mb-1 m-1 pointer">
                 <a href="#" class="text-dark bold m-1 decorated">&lt;</a>

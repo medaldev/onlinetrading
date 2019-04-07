@@ -147,6 +147,19 @@ class MainController extends AbstractController {
         $this->meta_desc = "Описание главной страницы.";
         $this->meta_key = "описание, описание главной страницы";
 
+        $propetries = array();
+        $values = array();
+
+        $attribites_objects = PropertiesCatsNamesDB::getAttributesOnCat($product->category_id);
+        $values_objects = PropertiesCatsValuesDB::getAttributesOnProduct($product->id);
+
+
+        foreach ($values_objects as $value) {
+            $values[] = $value->value;
+            $propetries[$attribites_objects[$value->attr_id]->attr] = $value->value;
+        }
+
+
         $render_data = array();
         $render_data["category_title"] = $category->title;
         $render_data["product_title"] = $product->title;
@@ -155,7 +168,7 @@ class MainController extends AbstractController {
         $render_data["product_link"] = $product->sef();
         $render_data["product_id"] = $product->id;
         $render_data["shop_properties"] = $product->getBaseProperties();
-        $render_data["seller_properties"] = $product->getSellerProperties();
+        $render_data["seller_properties"] = $propetries;
         $render_data["products"] = $this->getProducts(ProductDB::getRecomended($category->id, 3));
 
         $content = $this->view->render("product", $render_data, true);
