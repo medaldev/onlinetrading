@@ -57,8 +57,31 @@ class ProductDB extends ObjectDB {
 		return $properties;
 	}
 	
-	public static function getProductsOnCategoryId($id, $order="id") {
+	public static function getProductsOnCategoryId($id, $order="id", $filters=false) {
 		$data = ObjectDB::getAllOnField(self::$table, __CLASS__, "category_id", $id, $order);
+		if ($filters and is_array($filters)) {
+			foreach ($data as $product) {
+				$finded = false;
+
+				$propetries = array();
+				$values = array();
+
+				$attribites_objects = PropertiesCatsNamesDB::getAttributesOnCat($product->category_id);
+				$values_objects = PropertiesCatsValuesDB::getAttributesOnProduct($product->id);
+
+				foreach ($values_objects as $value) {
+					$values[] = $value->value;
+					$propetries[$attribites_objects[$value->attr_id]->attr] = $value->value;
+				}
+
+				foreach ($filters as $filter => $filer_value) {
+					if ($propetries[$filter] and $propetries[$filter] == $filer_value) {
+						$finded = true;
+					}
+				}
+				if (!$finded) unset($data[$product->id]);
+			}
+		}
 		$data = self::initDataItems($data);
 		return $data;
 	}

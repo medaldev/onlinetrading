@@ -142,7 +142,7 @@ a {
 }
 
 
-#login {
+#login, #filter_cat_products {
 	position: fixed;
 	top: 0px;
 	left: 0px;

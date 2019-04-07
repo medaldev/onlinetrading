@@ -13,17 +13,19 @@
                 <h2 class="h5 text-white pt-2 pb-2"><?=$category_title?></h2>
             </div>
             <div class="text-center mt-4 mb-1">
-                <span class="decorated m-1 bold pointer">Фильтровать</a></span>
+                <span class="decorated m-1 bold pointer" onclick="openWindow('filter_cat_products');">Фильтровать</a></span>
                 <span class="decorated m-1 bold pointer" onclick="cat_order_products('price')">Сортировка (цена)</span>
             </div>
             <?=$products?>
+            <!--
             <div class="text-center mt-4 mb-1 m-1 pointer">
                 <a href="#" class="text-dark bold m-1 decorated">&lt;</a>
                 <a href="#" class="text-dark bold m-1 decorated">1</a>
                 <a href="#" class="text-dark bold m-1 decorated">2</a>
                 <a href="#" class="text-dark bold m-1 decorated">3</a>
                 <a href="#" class="text-dark bold m-1 decorated">&gt;</a>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
+<?=$filter_modal?>

@@ -82,7 +82,6 @@ class MainController extends AbstractController {
     }
 
     public function actionCategory() {
-        print_r($this->request);
         $category = new CategoryDB();
         $category->loadOnId($this->request->id);
 
@@ -91,10 +90,22 @@ class MainController extends AbstractController {
         $this->meta_key = "описание, описание главной страницы";
         $sort = $this->request->sort;
         if (!$sort) $sort = "id";
+        $filters = array();
+        if (isset($_POST["filter"])) {
+            foreach ($_POST as $param => $val) {
+                if (strpos($param, "filter_") !== false) {
+                    $pr = new PropertiesCatsNamesDB();
+                    $pr->loadOnId(substr($param, 7));
+                    $filters[$pr->attr] = $val;
+                }
+            }
+        }
         $render_data = array();
         $render_data["category_title"] = $category->title;
         $render_data["categories"] = CategoryDB::getCategoriesOnSection($category->section_id);
-        $render_data["products"] = $this->getProducts(ProductDB::getProductsOnCategoryId($category->id, $sort));
+        $render_data["products"] = $this->getProducts(ProductDB::getProductsOnCategoryId($category->id, $sort, $filters));
+        $filters_titles = PropertiesCatsNamesDB::getAttributesOnCat($category->id);
+        $render_data["filter_modal"] = $this->view->render("filter_modal", array("fields" => $filters_titles), true);
 
 
         $content = $this->view->render("category", $render_data, true);
