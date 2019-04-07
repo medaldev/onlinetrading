@@ -38,10 +38,10 @@ class MainController extends AbstractController {
 	public function actionSection() {
         //unset($_SESSION["order"]);
         //unset($_SESSION["ordered_ids"]);
-
+        if (!is_numeric($this->request->id)) return $this->redirect("/");
         $section = new SectionDB();
 		$section->loadOnId($this->request->id);
-
+        if (!$section->id) return $this->redirect("/");
 		$this->title = $section->title;
 		$this->meta_desc = "Описание главной страницы.";
 		$this->meta_key = "описание, описание главной страницы";
@@ -82,8 +82,10 @@ class MainController extends AbstractController {
     }
 
     public function actionCategory() {
+        if (!is_numeric($this->request->id)) return $this->redirect("/");
         $category = new CategoryDB();
         $category->loadOnId($this->request->id);
+        if (!$category->id) return $this->redirect("/");
 
         $this->title = $category->title;
         $this->meta_desc = "Описание главной страницы.";
@@ -148,7 +150,7 @@ class MainController extends AbstractController {
     }
 
     public function actionProduct() {
-
+        if (!is_numeric($this->request->id)) return $this->redirect("/");
         $section = new SectionDB();
         $category = new CategoryDB();
         $product = new ProductDB();
@@ -189,7 +191,7 @@ class MainController extends AbstractController {
 
 
 	public function actionGetdataproduct() {
-		if (!$this->request->id) $this->redirect("/");
+		if (!$this->request->id) return $this->redirect("/");
 		$product = new ProductDB();
 		$product->loadOnId($this->request->id);
 		$cat = new CategoryDB();

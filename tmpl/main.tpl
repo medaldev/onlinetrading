@@ -15,7 +15,10 @@
     <div class="navbar navbar-dark">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <p class="h3 text-white logo mt-3 ml-3">ПензаТоргСервис</p>
+                <a href="/">
+
+                    <p class="h3 text-white logo mt-3 ml-3">ПензаТоргСервис</p>
+                </a>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                 <?=$system_menu?>

@@ -3,7 +3,7 @@
         <div class="col-3 mt-5 bg-grey-dark shadow p-0">
             <h2 class="h5 text-white pt-2 pb-2 bg-dark text-center bb-light">Категории</h2>
             <?php foreach ($categories as $category) { ?>
-            <a href="<?=$category->sef?>">
+            <a href="<?=($category->sef) ? $category->sef : '/category?id='.$category->id ?>">
                 <div class="text-white pt-3 pb-3 pl-3 bb-light"><?=$category->title?></div>
             </a>
             <?php }?>
