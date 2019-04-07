@@ -57,8 +57,8 @@ class ProductDB extends ObjectDB {
 		return $properties;
 	}
 	
-	public static function getProductsOnCategoryId($id) {
-		$data = ObjectDB::getAllOnField(self::$table, __CLASS__, "category_id", $id, "id");
+	public static function getProductsOnCategoryId($id, $order="id") {
+		$data = ObjectDB::getAllOnField(self::$table, __CLASS__, "category_id", $id, $order);
 		$data = self::initDataItems($data);
 		return $data;
 	}

@@ -82,18 +82,19 @@ class MainController extends AbstractController {
     }
 
     public function actionCategory() {
-
+        print_r($this->request);
         $category = new CategoryDB();
         $category->loadOnId($this->request->id);
 
         $this->title = $category->title;
         $this->meta_desc = "Описание главной страницы.";
         $this->meta_key = "описание, описание главной страницы";
-
+        $sort = $this->request->sort;
+        if (!$sort) $sort = "id";
         $render_data = array();
         $render_data["category_title"] = $category->title;
         $render_data["categories"] = CategoryDB::getCategoriesOnSection($category->section_id);
-        $render_data["products"] = $this->getProducts(ProductDB::getProductsOnCategoryId($category->id));
+        $render_data["products"] = $this->getProducts(ProductDB::getProductsOnCategoryId($category->id, $sort));
 
 
         $content = $this->view->render("category", $render_data, true);

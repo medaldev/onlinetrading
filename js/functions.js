@@ -131,6 +131,24 @@ function updateDataCountCart() {
 	};
 }
 
+function cat_order_products(field) {
+	var url = window.location.href;
+	var form = document.createElement("form");
+	form.setAttribute("method", 'post');
+	form.setAttribute("action", url);
+
+	var input = document.createElement("input");
+	input.setAttribute("type", "hidden");
+	input.setAttribute("name", 'sort');
+	input.setAttribute("value", field);
+
+	form.appendChild(input);
+	document.body.appendChild(form);
+
+
+	form.submit();
+}
+
 function authuser() {
 	login = document.querySelector("#userlogin").value;
 	password = document.querySelector("#userpassword").value;
