@@ -248,3 +248,8 @@ button {
 .bg-no {
 	background: none !important;
 }
+
+.sign_md_img {
+	max-width: 70px;
+	max-height: 70px;
+}

@@ -46,7 +46,7 @@
             </div>
             <div class="col-lg-6 col-md-7 col-sm-12 col-xs-12 text-white">
                 <div class="row mt-1">
-                    <div class="col-7">
+                    <div class="col-xs-12 col-md-7">
                         <div class="row p-1 mt-3">
                             <div class="col-2">
                                 <img src="/images/user1_add.png" class="sign" alt="d" />
@@ -66,13 +66,13 @@
 
 
                     </div>
-                    <div class="col-5 col-xs-12">
+                    <div class="col-xs-12 col-md-5">
                         <a href="/cart" class="text-white">
                             <div class="row">
-                                <div class="col-6 pr-0">
-                                    <img src="/images/cart.png" class="" alt="cart" />
+                                <div class="col-4 pr-0">
+                                    <img src="/images/cart.png" class="sign_md_img" alt="cart" />
                                 </div>
-                                <div class="col-6 p-0 mt-4">
+                                <div class="col-8 p-0 mt-4">
                                     <p class="h5 decorated">Корзина</p>
                                 </div>
                             </div>
@@ -99,24 +99,7 @@
                     <li>
                         <a href="#">Сотрудничество</a>
                     </li>
-                    <li>
-                        <a href="#">Оплата</a>
-                    </li>
-                    <li>
-                        <a href="#">Доставка</a>
-                    </li>
-                    <li>
-                        <a href="#">Сотрудничество</a>
-                    </li>
-                    <li>
-                        <a href="#">Оплата</a>
-                    </li>
-                    <li>
-                        <a href="#">Доставка</a>
-                    </li>
-                    <li>
-                        <a href="#">Сотрудничество</a>
-                    </li>
+
                 </ul>
                 <div class="clear"></div>
             </div>
@@ -141,24 +124,7 @@
                     <li>
                         <a href="#">Сотрудничество</a>
                     </li>
-                    <li>
-                        <a href="#">Оплата</a>
-                    </li>
-                    <li>
-                        <a href="#">Доставка</a>
-                    </li>
-                    <li>
-                        <a href="#">Сотрудничество</a>
-                    </li>
-                    <li>
-                        <a href="#">Оплата</a>
-                    </li>
-                    <li>
-                        <a href="#">Доставка</a>
-                    </li>
-                    <li>
-                        <a href="#">Сотрудничество</a>
-                    </li>
+
                 </ul>
                 <div class="clear"></div>
             </div>

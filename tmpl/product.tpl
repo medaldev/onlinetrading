@@ -22,7 +22,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <a href="<?=$product_link?>">
-                                <img src="/images/sections/1.jpg" alt="p" class="product_img"/>
+                                <img src="/images/products/<?=$product_id?>.jpg" alt="p" class="product_img"/>
                             </a>
                             <div class="col-12 bg-grey-dark shadow p-0" onclick="addProductInCart(<?=$product_id?>, this)">
                                 <h2 class="pointer h6 text-white pt-2 pb-2 bg-dark pt-2 mt-3 pb-2 text-center <?if ($in_order) echo 'button_clicked'?>"><?=$text_button?></h2>

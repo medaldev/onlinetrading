@@ -21,7 +21,7 @@ class MainController extends AbstractController {
 		$this->meta_desc = "Запрошенная страница не существует.";
 		$this->meta_key = "страница не найдена, страница не существует, 404";
 
-		$content = $this->view->render("404", [], true);
+		$content = $this->view->render("404", array(), true);
 
 		$this->render($content);
 	}
@@ -31,7 +31,7 @@ class MainController extends AbstractController {
 		$this->meta_desc = "Описание главной страницы.";
 		$this->meta_key = "описание, описание главной страницы";
 
-		$content = $this->view->render("index", ["topics" => TopicDB::getAllTopics()], true);
+		$content = $this->view->render("index", array("topics" => TopicDB::getAllTopics()), true);
 		$this->render($content);
 	}
 
@@ -76,9 +76,20 @@ class MainController extends AbstractController {
 
     public function actionRegister() {
         if ($this->request->login) {
-            echo UserDB::reg($this->request->login, $this->request->password, $this->request->password);
+            $result = false;
+            $login = $this->request->login;
+            $password = $this->request->password;
+            $captcha = $this->request->captcha;
+            //echo "<script>alert();</script>";
+            if ($captcha == $_SESSION['captcha_reg']) {
+                $result = UserDB::reg($login, $password, $password);
+            }
+            if ($result) $_SESSION["reg_message"] = "<p style='color: #008f10'>Регистрация успешно завершена!</p>";
+            else $_SESSION["reg_message"] = "<p style='color: #f00'>Ошибка при регистрации!</p>";
+
 
         }
+        $this->redirect("/reg");
     }
 
     public function actionCategory() {
@@ -262,38 +273,55 @@ class MainController extends AbstractController {
 	    $this->redirect("/");
     }
 
+    public function actioncaptcha() {
+        if (!session_id()) session_start(); // Начинаем сессию
+        header("Content-type: image/png"); // Отправляем заголовок с типом содержимого
+
+        $string = "";
+        for ($i = 0; $i < 5; $i++)
+            $string .= chr(rand(97, 122)); // Генерация случайной строки
+        $_SESSION['captcha_reg'] = $string; // Записываем код в сессию
+        $dir = "fonts/"; // Путь к папке со шрифтом
+        $image = imagecreatetruecolor(170, 60); // Создаём изображение
+        $color = imagecolorallocate($image, 200, 100, 90); // Создаём цвет текста
+        $white = imagecolorallocate($image, 255, 255, 255); // Создаём цвет фона
+        imagefilledrectangle($image, 0, 0, 170, 60, $white); // Закрашиваем изображение
+        imagettftext ($image, 30, 0, 10, 40, $color, $dir."verdana.ttf", $_SESSION['captcha_reg']); // Рисуем текст на капче
+        imagepng($image); // Выводим картинку
+    }
+
 	protected function getFullCategories() {
 		$items = CategoryDB::getAllCategoriesWithProducts();
-		$data = $this->view->render("categories_with_products", ["cats" => $items, "uri" => $this->uri], true);
+		$data = $this->view->render("categories_with_products", array("cats" => $items, "uri" => $this->uri), true);
 		return $data;
 	}
 
 	protected function getTopMenu() {
 		$items = MenuDB::getAllTopMenu();
-		$data = $this->view->render("topmenu", ["items" => $items, "uri" => $this->uri], true);
+		$data = $this->view->render("topmenu", array("items" => $items, "uri" => $this->uri), true);
 		return $data;
 	}
 
 	protected function getReviews() {
 		$items = ReviewDB::getAllReviews();
-		$data = $this->view->render("reviews", ["items" => $items, "uri" => $this->uri], true);
+		$data = $this->view->render("reviews", array("items" => $items, "uri" => $this->uri), true);
 		return $data;
 	}
 
     protected function getProducts($items) {
-        $data = $this->view->render("products", ["products" => $items], true);
+        $data = $this->view->render("products", array("products" => $items), true);
         return $data;
     }
 
 
 	protected function getSystemMenu() {
 		$items = SystemMenuDB::getMenu();
-		$data = $this->view->render("system_menu", ["items" => $items, "uri" => $this->uri], true);
+		$data = $this->view->render("system_menu", array("items" => $items, "uri" => $this->uri), true);
 		return $data;
 	}
 
     protected function getModal($type) {
-        $data = $this->view->render($type, [], true);
+        $data = $this->view->render($type, array(), true);
         return $data;
     }
 

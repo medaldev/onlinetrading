@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row">
-        <div class="col-3 mt-5 bg-grey-dark shadow p-0">
+    <div class="row m-0">
+        <div class="col-lg-3 mt-5 bg-grey-dark shadow p-0">
             <h2 class="h5 text-white pt-2 pb-2 bg-dark text-center bb-light">Категории</h2>
             <?php foreach ($categories as $category) { ?>
             <a href="<?=($category->sef) ? $category->sef : '/category?id='.$category->id ?>">
@@ -8,7 +8,7 @@
             </a>
             <?php }?>
         </div>
-        <div class="col-9 mt-5">
+        <div class="col-lg-9 mt-5">
             <div class="col-lg-12 bg-dark shadow">
                 <h2 class="h5 text-white pt-2 pb-2"><?=$section_title?></h2>
             </div>

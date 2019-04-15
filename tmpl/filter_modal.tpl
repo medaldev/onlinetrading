@@ -9,7 +9,6 @@
             </div>
         </div>
         <hr />
-        <p class="message p-1 text-center text-red" id="auth_message"></p>
         <form class="form-modal" name="auth" method="post" action="">
             <table>
                 <?php foreach ($fields as $field) { ?>
