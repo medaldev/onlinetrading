@@ -68,6 +68,24 @@ class MainController extends AbstractController {
 		$this->render($content);
 	}
 
+    public function actionShop() {
+        if (!is_numeric($this->request->id)) return $this->redirect("/");
+        $seller = new SellerDB();
+        $seller->loadOnId($this->request->id);
+        if (!$seller->id) return $this->redirect("/");
+        $this->title = $seller->title;
+        $this->meta_desc = "Описание главной страницы.";
+        $this->meta_key = "описание, описание главной страницы";
+
+        $render_data = array();
+        $render_data["seller"] = $seller;
+        $render_data["sections"] = SectionDB::getAllSections();
+        $render_data["products"] = $this->getProducts(ProductDB::getProductsOnSellerId($seller->id));
+
+        $content = $this->view->render("sellerinfo", $render_data, true);
+        $this->render($content);
+    }
+
     public function actionReg() {
         //unset($_SESSION["order"]);
         //unset($_SESSION["ordered_ids"]);

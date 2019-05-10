@@ -37,7 +37,7 @@ class ProductDB extends ObjectDB {
 		$properties = array();
 		$seller = new SellerDB();
 		$seller->loadOnProductId($this->seller_id);
-		$properties["seller"] = $seller->title;
+		$properties["Продавец"] = "<a href='".Config::SHOP_LINK."?id=".$seller->id."'>".$seller->title."</a>";
 		return $properties;
 	}
 

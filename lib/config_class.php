@@ -17,6 +17,8 @@ abstract class Config {
 	const USER_LAYOUT = "user";
 	const SELLER_LAYOUT = "seller";
 	const ADMIN_LAYOUT = "admin";
+
+	const SHOP_LINK = "/shop";
 	
 	const MIN_SEARCH_LEN = 2;
 	
