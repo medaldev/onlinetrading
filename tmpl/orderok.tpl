@@ -12,7 +12,9 @@
             <div class="col-lg-12 bg-dark shadow">
                 <h2 class="h5 text-white pt-2 pb-2">Заказ принят</h2>
             </div>
-            Спасибо за заказ. Ожидайте переадресацию на страницу оплаты.
+            <div class="col-12 mt-4 bg-white shadow">
+                Спасибо за заказ. Ожидайте переадресацию на страницу оплаты.
+            </div>
         </div>
     </div>
 </div>

@@ -63,8 +63,11 @@
                     </div>
                     <div class="col-6 pl-1">
                         <div class="col-12 bg-grey-dark shadow p-0">
-                            <h2 class="pointer h6 text-white pt-2 pb-2 bg-dark pt-2 pb-2 text-center">Оформить
-                                заказ</h2>
+                            <a href="/orderok">
+
+                                <h2 class="pointer h6 text-white pt-2 pb-2 bg-dark pt-2 pb-2 text-center">Оформить
+                                    заказ</h2>
+                            </a>
                         </div>
                     </div>
                 </div>

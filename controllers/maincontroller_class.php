@@ -27,6 +27,17 @@ class MainController extends AbstractController {
 		$this->render($content);
 	}
 
+    public function actionOrderOk() {
+        $this->title = "Подтверждение заказа";
+        $this->meta_desc = "Описание главной страницы.";
+        $this->meta_key = "описание, описание главной страницы";
+        $render_data = array();
+        $render_data["sections"] = SectionDB::getAllSections();
+        $content = $this->view->render("orderok", $render_data, true);
+
+        $this->render($content);
+    }
+
 	public function actionIndex() {
 		$this->title = "Главная страница";
 		$this->meta_desc = "Описание главной страницы.";
