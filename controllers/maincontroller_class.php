@@ -20,8 +20,9 @@ class MainController extends AbstractController {
 		$this->title = "Страница не найдена - 404";
 		$this->meta_desc = "Запрошенная страница не существует.";
 		$this->meta_key = "страница не найдена, страница не существует, 404";
-
-		$content = $this->view->render("404", array(), true);
+        $render_data = array();
+        $render_data["sections"] = SectionDB::getAllSections();
+		$content = $this->view->render("404", $render_data, true);
 
 		$this->render($content);
 	}

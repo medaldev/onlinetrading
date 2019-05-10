@@ -35,7 +35,10 @@ class Route {
 			}
 			
 		}
-		if (!$isset) $controller->action404();
+		if (!$isset) {
+		    $mc = new MainController();
+		    $mc->action404();
+        }
 	}
 	
 }
